@@ -9,11 +9,11 @@ public class Principal {
     List<String> valores = Arrays.asList("a", "b", "c");
 
     PilaCompleta<String> pila = new PilaCompleta<>();
-    pila.addAll(valores);
+    pila.pushAll(valores);
 
     System.out.println(pila.size());
 
     pila.popAll();
-    System.out.println(pila.empty())s;
+    System.out.println(pila.empty());
   }
 }

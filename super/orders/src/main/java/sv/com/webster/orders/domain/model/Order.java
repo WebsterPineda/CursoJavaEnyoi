@@ -2,9 +2,7 @@ package sv.com.webster.orders.domain.model;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import sv.com.webster.orders.shared.OrderData;
 

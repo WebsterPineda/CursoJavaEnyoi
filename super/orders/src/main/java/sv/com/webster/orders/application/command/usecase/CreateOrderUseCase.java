@@ -18,7 +18,7 @@ public class CreateOrderUseCase {
     String email = input.clientEmail();
     Client client = clientService.findByEmail(email).orElseThrow(() -> new RuntimeException("client not found"));
 
-    Order order = new Order(UUID.randomUUID(), client.getId());
+    Order order = new Order(UUID.randomUUID(), client.getId(),input.orderDetails());
     return orderRepository.save(order);
   }
 }

@@ -1,4 +1,6 @@
 package sv.com.webster.orders.interfaces.controller;
 
-public record CreateOrderDTO(String clientEmail) {
+import java.util.List;
+
+public record CreateOrderDTO(String clientEmail, List<CreateOrderDetailDTO> details) {
 }

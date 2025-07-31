@@ -16,14 +16,14 @@ public class Inventario {
   public void sell(int cantidad) {
     lock.lock();
     while(stock - cantidad < 0) {
-      System.out.println("No hay stock para la venta");
+      System.out.println("[" + Thread.currentThread().getName() + "] No hay stock para la venta");
       try {
         hasStock.await();
       } catch (InterruptedException e) {}
     }
 
     stock -= cantidad;
-    System.out.println("Venta efectuada: " + cantidad + ", nuevo stock: " + stock);
+    System.out.println("[" + Thread.currentThread().getName() + "] Venta efectuada: " + cantidad + ", nuevo stock: " + stock);
     lock.unlock();
   }
 
@@ -32,7 +32,7 @@ public class Inventario {
 
     try {
       stock += cantidad;
-      System.out.println("Se ha abastecido con " + cantidad + " productos, stock: " + stock);
+      System.out.println("[" + Thread.currentThread().getName() + "] Se ha abastecido con " + cantidad + " productos, stock: " + stock);
       hasStock.signalAll();
     } finally {
       lock.unlock();

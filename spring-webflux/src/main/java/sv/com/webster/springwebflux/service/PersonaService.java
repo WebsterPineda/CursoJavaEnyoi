@@ -29,6 +29,12 @@ public class PersonaService {
 
   public Flux<PersonaDTO> findByNombre(Flux<String> nombre) {
     return nombre.flatMap(name -> personaRepository.findByNombre(Mono.just(name)))
-      .flatMap(persona -> carroService.findByPersona(persona.getId()).collectList().map(carro -> new PersonaDTO(persona, carro)));
+      .flatMap(this::mapPersonaCarro);
+  }
+
+  private Mono<PersonaDTO> mapPersonaCarro(Persona persona) {
+    return carroService.findByPersona(persona.getId())
+      .collectList()
+      .map(carros -> new PersonaDTO(persona, carros));
   }
 }

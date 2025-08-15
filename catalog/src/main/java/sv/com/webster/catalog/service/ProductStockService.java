@@ -2,7 +2,6 @@ package sv.com.webster.catalog.service;
 
 import java.util.List;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Flux;
@@ -19,7 +18,7 @@ public class ProductStockService {
   private final WebClient webClient = WebClient.create("http://localhost:8080");
 
   public Mono<ProductStock> createStock(ProductStock productStock) {
-    return  productStockRepository.save(productStock);
+    return productStockRepository.save(productStock);
   }
 
   public Flux<ProductStockDto> getCatalogOfProductWithStock() {
@@ -33,13 +32,15 @@ public class ProductStockService {
       .bodyValue(List.of(stock.getProductId()))
       .retrieve()
       .bodyToMono(ProductInfoDto.class)
-      .map(info -> {
-        ProductStockDto dto =  new ProductStockDto();
-        dto.setId(info.getId());
-        dto.setName(info.getName());
-        dto.setDescription(info.getDescription());
-        dto.setStock(stock.getStock());
-        return dto;
-      });
+      .map(info -> mergeProductInfoWStock(stock, info));
+  }
+
+  private ProductStockDto mergeProductInfoWStock(ProductStock stock, ProductInfoDto info) {
+    ProductStockDto dto = new ProductStockDto();
+    dto.setId(info.getId());
+    dto.setName(info.getName());
+    dto.setDescription(info.getDescription());
+    dto.setStock(stock.getStock());
+    return dto;
   }
 }

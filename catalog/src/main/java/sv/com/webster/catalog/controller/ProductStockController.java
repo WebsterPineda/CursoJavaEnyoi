@@ -1,5 +1,6 @@
 package sv.com.webster.catalog.controller;
 
+import java.time.Duration;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
